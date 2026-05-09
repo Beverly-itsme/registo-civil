@@ -1,0 +1,33 @@
+ # Variáveis de ambiente - NUNCA fazer commit!
+.env
+.env.local
+.env.production
+
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+env/
+
+# Node / React
+node_modules/
+frontend/dist/
+frontend/build/
+
+# PDFs gerados
+backend/pdfs/
+
+# Scripts de teste
+inserir_dados.py
+
+# Editores
+.vscode/
+.idea/
+
+# Sistema operativo
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
