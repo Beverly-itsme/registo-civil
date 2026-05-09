@@ -183,10 +183,12 @@ def aprovar_nascimento(dados: DadosAprovacao, db: Session = Depends(get_db)):
         funcionario_nome = dados.funcionario_nome
     )
 
-    pre_registo.estado = "aprovado"
-    db.add(registo)
+    from backend.app.utils.gerar_pdf import gerar_boletim_nascimento
+    pdf_path = gerar_boletim_nascimento(registo)
+
+    registo.pdf_path    = pdf_path
+    registo.pdf_enviado = True
     db.commit()
-    db.refresh(registo)
 
     notificar_aprovado(
         db             = db,
@@ -198,9 +200,10 @@ def aprovar_nascimento(dados: DadosAprovacao, db: Session = Depends(get_db)):
     )
 
     return {
-        "sucesso":  True,
-        "nuic":     nuic,
-        "mensagem": "Registo aprovado e NUIC gerado com sucesso"
+        "sucesso":   True,
+        "nuic":      nuic,
+        "pdf_path":  pdf_path,
+        "mensagem":  "Registo aprovado, PDF gerado e notificação enviada"
     }
 
 @router.post("/nascimentos/rejeitar")
