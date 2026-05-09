@@ -166,6 +166,9 @@ def aprovar_nascimento(dados: DadosAprovacao, db: Session = Depends(get_db)):
 
     nuic = f"NASC-{datetime.utcnow().year}-{str(pre_registo.id).zfill(6)}"
 
+    pre_registo.estado = "aprovado"
+    db.flush()
+
     registo = RegistoNascimento(
         pre_registo_id   = pre_registo.id,
         nuic             = nuic,
@@ -180,8 +183,13 @@ def aprovar_nascimento(dados: DadosAprovacao, db: Session = Depends(get_db)):
         nome_avo_paterna = pre_registo.nome_avo_paterna,
         nome_avo_materno = pre_registo.nome_avo_materno,
         nome_avo_materna = pre_registo.nome_avo_materna,
-        funcionario_nome = dados.funcionario_nome
+        funcionario_nome = dados.funcionario_nome,
+        aprovado_em      = datetime.utcnow()
     )
+
+    db.add(registo)
+    db.commit()
+    db.refresh(registo)
 
     from backend.app.utils.gerar_pdf import gerar_boletim_nascimento
     pdf_path = gerar_boletim_nascimento(registo)

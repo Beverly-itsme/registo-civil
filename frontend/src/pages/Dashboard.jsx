@@ -27,6 +27,9 @@ export default function Dashboard() {
       <div style={{ background: "#1a5276", color: "white", padding: "20px", marginBottom: "20px", borderRadius: "8px" }}>
         <h1 style={{ margin: 0 }}>🏛️ Conservatória do Registo Civil de Beira</h1>
         <p style={{ margin: "5px 0 0 0", opacity: 0.8 }}>Painel do Funcionário</p>
+        <a href="/verificar" style={{ marginTop: "10px", display: "inline-block", background: "transparent", color: "white", border: "1px solid white", padding: "6px 14px", borderRadius: "6px", textDecoration: "none", fontSize: "13px" }}>
+          🔍 Verificação Pública
+        </a>
       </div>
 
       <div style={{ marginBottom: "20px" }}>
